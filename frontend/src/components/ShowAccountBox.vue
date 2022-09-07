@@ -171,6 +171,10 @@ export default {
     accountId: {
       type: String,
       required: true
+    },
+    deviceId: {
+      type: String,
+      required: true
     }
   },
   setup () {
@@ -195,7 +199,7 @@ export default {
       // Move this out as a prop with account ID
       console.log('Getting account for ' + this.$props.accountId)
       this.$store.dispatch('getAccount', { accountId: this.$props.accountId })
-      this.$store.dispatch('notifications/update', { accountId: this.$props.accountId })
+      this.$store.dispatch('notifications/update', { accountId: this.$props.accountId, deviceId: this.$props.deviceId })
       this.$store.dispatch('getAndSummarizeEdrs', { deviceId: this.$props.deviceId })
     }
   }

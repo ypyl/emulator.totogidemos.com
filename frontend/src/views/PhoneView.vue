@@ -12,7 +12,7 @@
     </CModal>
     <br />
     <h1>Device: {{ deviceId }} </h1>
-    <ShowAccountBox :accountId="accountId" />
+    <ShowAccountBox :accountId="accountId" :deviceId="deviceId" />
     <CContainer fluid>
     <CRow>
       <CCol>
@@ -90,7 +90,7 @@
             <br>
         </div>
       </CCol>
-      <LogBox :logLines="$store.state.logs" />
+      <LogBox :logLines="currentLogLines()" />
     </CRow>
     </CContainer>
   </div>
@@ -139,6 +139,13 @@ export default {
     }
   },
   methods: {
+    currentLogLines () {
+      const currentLogLines = this.$store.state.deviceLogs[this.$props.deviceId]
+      if (currentLogLines === undefined) {
+        return []
+      }
+      return currentLogLines
+    },
     changeMinuteSelection (value) {
       this.minuteSelection = value
     },

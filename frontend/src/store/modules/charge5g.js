@@ -35,15 +35,21 @@ export default {
       const logTimeVerbose = logTimeRaw.format('YYYY-MM-DDTHH:mm:ss.SS') + 'Z'
       if (verboseLoggingOn) {
         context.commit('addLog', {
-          id: logTimeSummary,
-          text: JSON.stringify(initRequestData, null, 4),
-          style: 'info'
+          deviceId: deviceId,
+          log: {
+            id: logTimeSummary,
+            text: JSON.stringify(initRequestData, null, 4),
+            style: 'info'
+          }
         })
       }
       context.commit('addLog', {
-        id: logTimeVerbose,
-        text: message,
-        style: 'info'
+        deviceId: deviceId,
+        log: {
+          id: logTimeVerbose,
+          text: message,
+          style: 'info'
+        }
       })
       console.log('INIT RESULT:')
       console.log(initResult)

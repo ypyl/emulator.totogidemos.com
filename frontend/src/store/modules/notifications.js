@@ -8,7 +8,7 @@ export default {
   getters: {},
   mutations: {},
   actions: {
-    async update (context, { accountId }) {
+    async update (context, { accountId, deviceId }) {
       const providerId = context.rootState.providerId
       // End of next like should be updated to this at the end insread of deviceId:
       //  &accountId=${accountId}`
@@ -18,9 +18,12 @@ export default {
       const notifications = result.data.items
       for (let i = 0; i < notifications.length; i++) {
         context.commit('addLog', {
-          id: notifications[i].timestamp,
-          text: notifications[i].message,
-          style: 'notification'
+          deviceId: deviceId,
+          log: {
+            id: notifications[i].timestamp,
+            text: notifications[i].message,
+            style: 'notification'
+          }
         }, { root: true })
       }
     }
