@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  props: ['numberMinutes'],
+  props: ['numberMinutes', 'deviceId'],
   methods: {
     iconClicked () {
       const message = `VOICE ACTIVITY: Charging ${this.numberMinutes} minutes`
@@ -12,6 +12,7 @@ export default {
       const volumeSeconds = this.numberMinutes * 60
       const ratingGroupNumber = 100
       const payload = {
+        deviceId: this.$props.deviceId,
         volume: volumeSeconds,
         ratingGroupNumber: ratingGroupNumber,
         message: message

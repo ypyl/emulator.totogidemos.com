@@ -28,6 +28,14 @@
           </CNavItem>
           <CNavItem>
             <CNavLink
+              @click="this.$router.push({ name: 'Accounts' })"
+              active
+            >
+              Accounts
+            </CNavLink>
+          </CNavItem>
+          <CNavItem>
+            <CNavLink
               @click="this.$router.push({ name: 'Devices' })"
               active
             >

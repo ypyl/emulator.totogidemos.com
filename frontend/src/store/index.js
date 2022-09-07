@@ -37,7 +37,7 @@ export default createStore({
       planVersionDataAllocationMb: null,
       allAvailablePlanInformation: {},
       currentPlanInformation: {},
-      demoAccountsAndDevices: []
+      accounts: {}
     }
   },
   getters: {
@@ -55,8 +55,8 @@ export default createStore({
     updateUnitTypeMapping (state, newMapping) {
       state.unitTypeMapping = newMapping
     },
-    addDemoAccountsAndDevices (state, accountDevice) {
-      state.demoAccountsAndDevices.push(accountDevice)
+    putAccount (state, newAccountDetails) {
+      state.accounts[newAccountDetails.accountId] = newAccountDetails
     },
     addLog (state, log) {
       let logLengthLimit

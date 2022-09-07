@@ -167,6 +167,12 @@ export default {
     CIcon,
     DoughnutChart
   },
+  props: {
+    accountId: {
+      type: String,
+      required: true
+    }
+  },
   setup () {
     return {
       cilPeople,
@@ -186,10 +192,11 @@ export default {
   },
   methods: {
     loadData: function () {
-      console.log('Getting account for ' + this.$store.state.demoAccountsAndDevices[0].name)
-      this.$store.dispatch('getAccount')
-      this.$store.dispatch('notifications/update')
-      this.$store.dispatch('getAndSummarizeEdrs')
+      // Move this out as a prop with account ID
+      console.log('Getting account for ' + this.$props.accountId)
+      this.$store.dispatch('getAccount', { accountId: this.$props.accountId })
+      this.$store.dispatch('notifications/update', { accountId: this.$props.accountId })
+      this.$store.dispatch('getAndSummarizeEdrs', { deviceId: this.$props.deviceId })
     }
   }
 }

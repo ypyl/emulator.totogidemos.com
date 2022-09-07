@@ -32,8 +32,8 @@ export default {
     }
   },
   actions: {
-    async getAndSummarizeEdrs (context) {
-      this.dispatch('getAllEdrs', { after: undefined })
+    async getAndSummarizeEdrs (context, { deviceId }) {
+      this.dispatch('getAllEdrs', { after: undefined, deviceId: deviceId })
       const edrEdges = JSON.parse(JSON.stringify(context.state.edrEdges))
       let voiceBucket = 0
       let smsBucket = 0
@@ -64,7 +64,7 @@ export default {
         context.commit('updateDataEdrSummary', dataBucket)
       }
     },
-    async getAllEdrs (context, { after }) {
+    async getAllEdrs (context, { after, deviceId }) {
       const idToken = context.rootState.idToken
       const providerId = context.rootState.providerId
       const now = moment.utc().format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z'
@@ -73,7 +73,7 @@ export default {
         graphQLUrl,
         getEventDataRecordsByDeviceQuery(
           providerId,
-          context.rootState.demoAccountsAndDevices[0].id,
+          deviceId,
           yesterday,
           now,
           after
@@ -87,7 +87,7 @@ export default {
       context.commit('addEdrEdges', edges)
       const pageInfo = eventDataRecordsResponse.data.data.getEventDataRecordsByDevice.pageInfo
       if (pageInfo.hasNextPage !== false) {
-        this.dispatch('getAllEdrs', { after: pageInfo.endCursor })
+        this.dispatch('getAllEdrs', { after: pageInfo.endCursor, deviceId: deviceId })
       }
     }
   }

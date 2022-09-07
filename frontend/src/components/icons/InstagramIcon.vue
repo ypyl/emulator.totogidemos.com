@@ -6,6 +6,7 @@
 import getStorageSizeInBytesByUnit from '@/utils/storageSizes'
 
 export default {
+  props: ['deviceId'],
   methods: {
     iconClicked () {
       const message = 'DATA ACTIVITY: Charging 50 MB'
@@ -13,6 +14,7 @@ export default {
       const volume = 50 * getStorageSizeInBytesByUnit('MB')
       const ratingGroupNumber = 300
       const payload = {
+        deviceId: this.$props.deviceId,
         volume: volume,
         ratingGroupNumber: ratingGroupNumber,
         message: message

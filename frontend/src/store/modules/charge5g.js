@@ -16,11 +16,10 @@ export default {
   getters: {},
   mutations: {},
   actions: {
-    async chargeAccount (context, { volume, ratingGroupNumber, message }) {
+    async chargeAccount (context, { volume, ratingGroupNumber, message, deviceId }) {
       const verboseLoggingOn = context.rootState.verboseLogging
       const token = context.rootState.idToken
       const providerId = context.rootState.providerId
-      const deviceId = context.rootState.demoAccountsAndDevices[0].id
       const unitTypeMapping = context.rootState.unitTypeMapping
       const unitType = unitTypeMapping[ratingGroupNumber]
       const urlForInit = await initUrl()

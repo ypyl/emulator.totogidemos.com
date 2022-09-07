@@ -8,8 +8,7 @@ export default {
   getters: {},
   mutations: {},
   actions: {
-    async getAccount (context) {
-      const accountId = context.rootState.demoAccountsAndDevices[0].id
+    async getAccount (context, { accountId }) {
       const idToken = context.rootState.idToken
       const providerId = context.rootState.providerId
       const response = await axios.post(
