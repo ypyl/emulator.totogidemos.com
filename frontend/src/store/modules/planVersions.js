@@ -39,6 +39,12 @@ export function availablePlansAndVersions (rawData) {
       createdAt: result.planVersions.createdAt
     }
   })
+  // filter anything that starts with "Oldv"
+  // Rename plans to "Oldv1, Oldv2 etc. or even OldvSomePlanName"
+  // Use this to help keep old plans decluttered by renaming them in the plan designer
+  results = _.remove(results, function (result) {
+    return !_.includes(result.planName, 'Oldv')
+  })
   return results
 }
 

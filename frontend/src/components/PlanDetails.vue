@@ -8,17 +8,96 @@
             <CTableHeaderCell scope="col">Plan Id</CTableHeaderCell>
             <CTableHeaderCell scope="col">Plan Version Name</CTableHeaderCell>
             <CTableHeaderCell scope="col">Plan Version Id</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Default Plan?</CTableHeaderCell>
         </CTableRow>
     </CTableHead>
     <CTableBody>
         <CTableRow>
-            <CTableDataCell>{{$store.state.currentPlanInformation.planName}}</CTableDataCell>
-            <CTableDataCell>{{$store.state.currentPlanInformation.planId}}</CTableDataCell>
-            <CTableDataCell>{{$store.state.currentPlanInformation.planVersionName}}</CTableDataCell>
-            <CTableDataCell>{{$store.state.currentPlanInformation.planVersionId}}</CTableDataCell>
+            <CTableDataCell>
+              <b>
+                {{$store.state.currentPlanInformation.planName}}
+              </b>
+            </CTableDataCell>
+            <CTableDataCell>
+              <b>
+                {{$store.state.currentPlanInformation.planId}}
+              </b>
+            </CTableDataCell>
+            <CTableDataCell>
+              <b>
+                {{$store.state.currentPlanInformation.planVersionName}}
+              </b>
+            </CTableDataCell>
+            <CTableDataCell>
+              <b>
+                {{$store.state.currentPlanInformation.planVersionId}}
+              </b>
+            </CTableDataCell>
+            <CTableDataCell>
+              <CButton
+                disabled
+                color="success"
+              >
+                <b>
+                  Yes.
+                </b>
+              </CButton>
+            </CTableDataCell>
         </CTableRow>
+        <template v-if="!showFull && Array.isArray($store.state.allAvailablePlanInformation)">
+          <CTableRow
+            v-for="plan in $store.state.allAvailablePlanInformation.slice(0, 5)"
+            :key="plan.planId"
+          >
+            <CTableDataCell>{{plan.planName}}</CTableDataCell>
+            <CTableDataCell>{{plan.planId}}</CTableDataCell>
+            <CTableDataCell>{{plan.planVersionName}}</CTableDataCell>
+            <CTableDataCell>{{plan.planVersionId}}</CTableDataCell>
+            <CTableDataCell>
+              <CButton
+                color="info"
+                @click="makeDefault(plan)"
+              >
+                Make default
+              </CButton>
+            </CTableDataCell>
+          </CTableRow>
+        </template>
+        <template v-if="showFull">
+          <CTableRow
+            v-for="plan in $store.state.allAvailablePlanInformation"
+            :key="plan.planId"
+          >
+            <CTableDataCell>{{plan.planName}}</CTableDataCell>
+            <CTableDataCell>{{plan.planId}}</CTableDataCell>
+            <CTableDataCell>{{plan.planVersionName}}</CTableDataCell>
+            <CTableDataCell>{{plan.planVersionId}}</CTableDataCell>
+            <CTableDataCell>
+              <CButton
+                color="info"
+                @click="makeDefault(plan)"
+              >
+                Make default
+              </CButton>
+            </CTableDataCell>
+          </CTableRow>
+        </template>
     </CTableBody>
   </CTable>
+  <CButton
+    v-if = "!showFull"
+    color="info"
+    @click="showFull = !showFull"
+  >
+    Show more plans
+  </CButton>
+  <CButton
+    v-if = "showFull"
+    color="info"
+    @click="showFull = !showFull"
+  >
+    Show less plans
+  </CButton>
   <CRow>
     <CCol></CCol>
     <CCol>
@@ -49,10 +128,14 @@ export default {
   name: 'PlanDetails',
   data () {
     return {
-      loadingPlanData: false
+      loadingPlanData: false,
+      showFull: false
     }
   },
   methods: {
+    async makeDefault (planDetails) {
+      await this.$store.commit('setCurrentPlanInformation', planDetails, { root: true })
+    },
     async loadBasicPlanData () {
       this.loadingPlanData = true
       await this.$store.dispatch('planVersions/getPlanInformation')
