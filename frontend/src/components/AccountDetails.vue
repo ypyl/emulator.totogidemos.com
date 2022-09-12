@@ -27,7 +27,9 @@
           {{account.parent}}
         </CTableDataCell>
         <CTableDataCell>
-          {{account.planName}}
+          <template v-for="(plan, index) in account.subscription">
+            {{plan.planName}}<template v-if="account.subscription.length > 0 && index != account.subscription.length - 1">, </template>
+          </template>
         </CTableDataCell>
         <CTableDataCell>
           Account
@@ -62,7 +64,9 @@
             {{account.accountId}}
           </CTableDataCell>
           <CTableDataCell>
-            {{account.planName}}
+            <template v-for="(plan, index) in account.subscription">
+              {{plan.planName}}<template v-if="account.subscription.length > 0 && index != account.subscription.length - 1">, </template>
+            </template>
           </CTableDataCell>
           <CTableDataCell>
             Device
@@ -151,7 +155,6 @@ export default {
       this.accountSelection = value
     },
     async subscribeAccount (accountId) {
-      console.log(accountId)
       this.subscribingAccount = true
       await this.$store.dispatch('account/subscribeToCurrentPlanVersion', { accountId: accountId })
       this.subscribingAccount = false
