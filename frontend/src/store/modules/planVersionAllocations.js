@@ -121,7 +121,15 @@ export function getPlanVersionInformationQuery (providerId, planVersionId) {
         ... on PlanVersion {
         providerId
         template {
-            ... on InitialTemplateInstance {
+            ... on InitialTemplateInstance  {
+              services {
+                ratingGroupId
+                priority
+                unit{
+                  periodAllowance
+                  balanceName
+                }
+              }
             firstUsageFee
             purchaseFee
             period {
