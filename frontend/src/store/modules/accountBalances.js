@@ -47,6 +47,7 @@ export default {
         return
       } catch (e) {
         console.log('Failed to do something in wave3 balances')
+        console.log(e)
       }
       // Setting voice account balance
       try {

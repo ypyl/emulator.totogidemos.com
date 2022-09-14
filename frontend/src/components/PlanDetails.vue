@@ -135,6 +135,7 @@ export default {
   methods: {
     async makeDefault (planDetails) {
       await this.$store.commit('setCurrentPlanInformation', planDetails, { root: true })
+      await this.$store.dispatch('planVersionAllocations/getPlanVersionInformation')
     },
     async loadBasicPlanData () {
       this.loadingPlanData = true
