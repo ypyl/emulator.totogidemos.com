@@ -36,14 +36,6 @@
           </CNavItem>
           <CNavItem>
             <CNavLink
-              @click="this.$router.push({ name: 'Devices' })"
-              active
-            >
-              Devices
-            </CNavLink>
-          </CNavItem>
-          <CNavItem>
-            <CNavLink
               v-if="$store.state.idToken"
               @click="openConfigModal()" active>
               View Config

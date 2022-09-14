@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import PhoneView from '../views/PhoneView.vue'
-import DevicesView from '../views/DevicesView.vue'
 import AccountsView from '../views/AccountsView.vue'
 import SignInView from '../views/SignInView.vue'
 import store from '../store/index'
@@ -21,11 +20,6 @@ const routes = [
     path: '/accounts',
     name: 'Accounts',
     component: AccountsView
-  },
-  {
-    path: '/devices',
-    name: 'Devices',
-    component: DevicesView
   },
   {
     path: '/account/:accountId/device/:deviceId',

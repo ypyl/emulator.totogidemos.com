@@ -10,7 +10,7 @@ import MainNav from '@/components/MainNav.vue'
 import AccountDetails from '@/components/AccountDetails.vue'
 
 export default {
-  name: 'DevicesView',
+  name: 'AccountsView',
   components: {
     MainNav,
     AccountDetails
