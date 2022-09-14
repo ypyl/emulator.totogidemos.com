@@ -28,10 +28,10 @@
           </CNavItem>
           <CNavItem>
             <CNavLink
-              @click="this.$router.push({ name: 'Devices' })"
+              @click="this.$router.push({ name: 'Accounts' })"
               active
             >
-              Devices
+              Accounts
             </CNavLink>
           </CNavItem>
           <CNavItem>

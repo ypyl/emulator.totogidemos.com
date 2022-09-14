@@ -12,7 +12,7 @@
     </CModal>
     <br />
     <h1>Device: {{ deviceId }} </h1>
-    <ShowAccountBox />
+    <ShowAccountBox :accountId="accountId" :deviceId="deviceId" />
     <CContainer fluid>
     <CRow>
       <CCol>
@@ -22,7 +22,7 @@
             <br><br><br>
             <CRow>
               <CCol>
-                <PhoneIcon :numberMinutes="minuteSelection" />
+                <PhoneIcon :numberMinutes="minuteSelection" :deviceId="deviceId" />
                 <div id="smsVoiceDropDownSelect">
                   <CFormSelect
                     aria-label="Select number of minutes to charge"
@@ -36,7 +36,7 @@
                 </div>
               </CCol>
               <CCol>
-                <MessagesIcon :numberSms="smsSelection" />
+                <MessagesIcon :numberSms="smsSelection" :deviceId="deviceId" />
                 <div id="smsVoiceDropDownSelect">
                   <CFormSelect
                     aria-label="Select number of SMS to charge"
@@ -54,17 +54,17 @@
             <h3>Data Usage:</h3>
             <CRow>
               <CCol>
-                <NetflixIcon />
+                <NetflixIcon :deviceId="deviceId" />
                 <h4>2hr episode</h4>
                 <h4>(2GB)</h4>
               </CCol>
               <CCol>
-                <PodcastIcon />
+                <PodcastIcon :deviceId="deviceId" />
                 <h4>1.5hr podcast</h4>
                 <h4>(100MB)</h4>
               </CCol>
               <CCol>
-                <InstagramIcon />
+                <InstagramIcon :deviceId="deviceId" />
                 <h4>30min social</h4>
                 <h4>(50MB)</h4>
               </CCol>
@@ -80,7 +80,7 @@
                   <h4>WhatsApp (50MB)</h4>
                 </CCol>
                 <CCol>
-                  <FacebookIcon />
+                  <FacebookIcon :deviceId="deviceId" />
                   <h4>Facebook (50MB)</h4>
                 </CCol>
               </CRow>
@@ -90,7 +90,7 @@
             <br>
         </div>
       </CCol>
-      <LogBox :logLines="$store.state.logs" />
+      <LogBox :logLines="currentLogLines()" />
     </CRow>
     </CContainer>
   </div>
@@ -126,6 +126,10 @@ export default {
     deviceId: {
       type: String,
       required: true
+    },
+    accountId: {
+      type: String,
+      required: true
     }
   },
   data () {
@@ -135,6 +139,13 @@ export default {
     }
   },
   methods: {
+    currentLogLines () {
+      const currentLogLines = this.$store.state.deviceLogs[this.$props.deviceId]
+      if (currentLogLines === undefined) {
+        return []
+      }
+      return currentLogLines
+    },
     changeMinuteSelection (value) {
       this.minuteSelection = value
     },

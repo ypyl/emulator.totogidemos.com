@@ -2,14 +2,19 @@ import axios from 'axios'
 import getStorageSizeInBytesByUnit from '@/utils/storageSizes'
 import { graphQLUrl } from '@/store/common'
 import { getAccountQuery } from './queries'
+import {
+  getMonetaryBalance,
+  getVoiceAllNetBalance,
+  getTextAllNetBalance,
+  getDataBalance
+} from './utils/wave3Balances'
 
 export default {
   state: {},
   getters: {},
   mutations: {},
   actions: {
-    async getAccount (context) {
-      const accountId = context.rootState.demoAccountsAndDevices[0].id
+    async getAccount (context, { accountId }) {
       const idToken = context.rootState.idToken
       const providerId = context.rootState.providerId
       const response = await axios.post(
@@ -23,6 +28,26 @@ export default {
       )
       console.log(response)
       const balanceData = JSON.parse(response.data.data.getAccount.balance.customData)
+      // Testing wave 3
+      try {
+        const monetaryBalance = await getMonetaryBalance(balanceData.balance)
+        const voiceBalance = await getVoiceAllNetBalance(balanceData.balance)
+        const textBalance = await getTextAllNetBalance(balanceData.balance)
+        const dataBalance = await getDataBalance(balanceData.balance)
+        console.log(monetaryBalance)
+        console.log(voiceBalance)
+        console.log(textBalance)
+        console.log(dataBalance)
+        context.commit('setCurrentMonetaryBalance', monetaryBalance.toString())
+        context.commit('setCurrentVoiceBalanceMinutes', voiceBalance.toString())
+        context.commit('setCurrentSmsBalance', textBalance.toString())
+        const currentDataBalanceBytes = dataBalance
+        const currentDataBalanceMb = Math.floor(currentDataBalanceBytes / getStorageSizeInBytesByUnit('MB'))
+        context.commit('setCurrentDataBalanceMb', currentDataBalanceMb.toString())
+        return
+      } catch (e) {
+        console.log('Failed to do something in wave3 balances')
+      }
       // Setting voice account balance
       try {
         // Try as if limited balance

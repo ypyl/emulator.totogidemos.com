@@ -25,7 +25,7 @@ export default createStore({
         300: 'totalVolume',
         400: 'serviceSpecificUnits'
       },
-      logs: [],
+      deviceLogs: {},
       zeroRatedData: false,
       accountDeviceError: false,
       currentSmsBalance: 'loading...',
@@ -37,7 +37,7 @@ export default createStore({
       planVersionDataAllocationMb: null,
       allAvailablePlanInformation: {},
       currentPlanInformation: {},
-      demoAccountsAndDevices: []
+      accounts: {}
     }
   },
   getters: {
@@ -55,22 +55,27 @@ export default createStore({
     updateUnitTypeMapping (state, newMapping) {
       state.unitTypeMapping = newMapping
     },
-    addDemoAccountsAndDevices (state, accountDevice) {
-      state.demoAccountsAndDevices.push(accountDevice)
+    putAccount (state, newAccountDetails) {
+      state.accounts[newAccountDetails.accountId] = newAccountDetails
     },
-    addLog (state, log) {
+    addLog (state, { log, deviceId }) {
+      // Check if the device ID has a log setup for it
+      // otherwise create it
+      if (!(deviceId in state.deviceLogs)) {
+        state.deviceLogs[deviceId] = []
+      }
       let logLengthLimit
       if (state.verboseLogging) {
-        state.logs.push(log)
+        state.deviceLogs[deviceId].push(log)
         logLengthLimit = 4
       } else {
-        state.logs.push(log)
+        state.deviceLogs[deviceId].push(log)
         logLengthLimit = 15
       }
-      const ids = state.logs.map(o => o.id)
-      const filtered = state.logs.filter(({ id }, index) => !ids.includes(id, index + 1))
-      state.logs = filtered
-      state.logs.sort((a, b) => {
+      const ids = state.deviceLogs[deviceId].map(o => o.id)
+      const filtered = state.deviceLogs[deviceId].filter(({ id }, index) => !ids.includes(id, index + 1))
+      state.deviceLogs[deviceId] = filtered
+      state.deviceLogs[deviceId].sort((a, b) => {
         if (a.id < b.id) {
           return -1
         }
@@ -79,8 +84,8 @@ export default createStore({
         }
         return 0
       })
-      if (state.logs.length > logLengthLimit) {
-        state.logs.shift()
+      if (state.deviceLogs[deviceId].length > logLengthLimit) {
+        state.deviceLogs[deviceId].shift()
       }
     },
     setAccountDeviceError (state, errorState) {

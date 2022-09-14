@@ -67,6 +67,13 @@ export default {
           }
         }
       )
+      // Add updating the current plan version for an account
+      const planDetails = context.rootState.currentPlanInformation
+      const currentAccountState = context.rootState.accounts[accountId]
+      currentAccountState.subscription.push(planDetails)
+      const newAccountState = currentAccountState
+      console.log(newAccountState)
+      await context.commit('putAccount', newAccountState, { root: true })
     }
   }
 }

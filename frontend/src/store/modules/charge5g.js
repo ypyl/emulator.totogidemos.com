@@ -16,11 +16,10 @@ export default {
   getters: {},
   mutations: {},
   actions: {
-    async chargeAccount (context, { volume, ratingGroupNumber, message }) {
+    async chargeAccount (context, { volume, ratingGroupNumber, message, deviceId }) {
       const verboseLoggingOn = context.rootState.verboseLogging
       const token = context.rootState.idToken
       const providerId = context.rootState.providerId
-      const deviceId = context.rootState.demoAccountsAndDevices[0].id
       const unitTypeMapping = context.rootState.unitTypeMapping
       const unitType = unitTypeMapping[ratingGroupNumber]
       const urlForInit = await initUrl()
@@ -36,15 +35,21 @@ export default {
       const logTimeVerbose = logTimeRaw.format('YYYY-MM-DDTHH:mm:ss.SS') + 'Z'
       if (verboseLoggingOn) {
         context.commit('addLog', {
-          id: logTimeSummary,
-          text: JSON.stringify(initRequestData, null, 4),
-          style: 'info'
+          deviceId: deviceId,
+          log: {
+            id: logTimeSummary,
+            text: JSON.stringify(initRequestData, null, 4),
+            style: 'info'
+          }
         })
       }
       context.commit('addLog', {
-        id: logTimeVerbose,
-        text: message,
-        style: 'info'
+        deviceId: deviceId,
+        log: {
+          id: logTimeVerbose,
+          text: message,
+          style: 'info'
+        }
       })
       console.log('INIT RESULT:')
       console.log(initResult)
