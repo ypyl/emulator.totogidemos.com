@@ -580,3 +580,77 @@ export function getEventDataRecordsByDeviceQuery (providerId, deviceId, timestam
     query: query
   })
 }
+export function CancelPlanSubscriptionMutation (accountId, providerId, planVersionId) {
+  return JSON.stringify({
+    query: `mutation CancelPlanSubs {
+      cancelPlanSubscription(
+        input: {
+          accountId: "${accountId}"
+          providerId: "${providerId}"
+          planVersionId: "${planVersionId}"
+        }
+      ) {
+        ... on SubscriptionNotFound {
+          from
+          to
+          planVersionId
+          errorMessage
+          errorCode
+        }
+        ... on InvalidField {
+          errorMessage
+          fieldName
+          errorCode
+        }
+        ... on AccountNotFound {
+          errorMessage
+          providerId
+          errorCode
+          accountId
+        }
+        ... on PlanVersionNotFound {
+          providerId
+          planVersionId
+          errorMessage
+          errorCode
+        }
+        ... on CancelPlanVersionSubscriptionPayload {
+          __typename
+          account {
+            providerId
+            id
+            customData
+            activePlanVersions {
+              to
+              from
+              planVersion {
+                version
+                state
+                id
+              }
+            }
+            archivedPlanVersions {
+              to
+              from
+              planVersion {
+                version
+                state
+                id
+              }
+            }
+            inactivePlanVersions {
+              to
+              from
+              planVersion {
+                version
+                state
+                id
+              }
+            }
+          }
+        }
+      }
+    }
+    `
+  })
+}
