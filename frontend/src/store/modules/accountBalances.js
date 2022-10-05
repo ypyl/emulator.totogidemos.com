@@ -4,10 +4,8 @@ import { graphQLUrl } from '@/store/common'
 import { getAccountQuery } from './queries'
 import {
   getMonetaryBalance,
-  getVoiceAllNetBalance,
-  getTextAllNetBalance,
-  getDataBalance
-} from './utils/wave3Balances'
+  getAllServiceBalances
+} from './utils/unifiedBalances'
 
 export default {
   state: {},
@@ -31,19 +29,9 @@ export default {
       // Testing wave 3
       try {
         const monetaryBalance = await getMonetaryBalance(balanceData.balance)
-        const voiceBalance = await getVoiceAllNetBalance(balanceData.balance)
-        const textBalance = await getTextAllNetBalance(balanceData.balance)
-        const dataBalance = await getDataBalance(balanceData.balance)
-        console.log(monetaryBalance)
-        console.log(voiceBalance)
-        console.log(textBalance)
-        console.log(dataBalance)
         context.commit('setCurrentMonetaryBalance', monetaryBalance.toString())
-        context.commit('setCurrentVoiceBalanceMinutes', voiceBalance.toString())
-        context.commit('setCurrentSmsBalance', textBalance.toString())
-        const currentDataBalanceBytes = dataBalance
-        const currentDataBalanceMb = Math.floor(currentDataBalanceBytes / getStorageSizeInBytesByUnit('MB'))
-        context.commit('setCurrentDataBalanceMb', currentDataBalanceMb.toString())
+        const serviceBalances = await getAllServiceBalances(balanceData.balance)
+        context.commit('setCurrentNonMonetaryBalances', serviceBalances)
         return
       } catch (e) {
         console.log('Failed to do something in wave3 balances')

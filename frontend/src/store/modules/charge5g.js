@@ -21,9 +21,19 @@ export default {
       const token = context.rootState.idToken
       const providerId = context.rootState.providerId
       const unitTypeMapping = context.rootState.unitTypeMapping
+      const mcc = context.rootState.mcc
+      const mnc = context.rootState.mnc
       const unitType = unitTypeMapping[ratingGroupNumber]
       const urlForInit = await initUrl()
-      const initRequestData = await initData(providerId, deviceId, volume, ratingGroupNumber, unitType)
+      const initRequestData = await initData(
+        providerId,
+        deviceId,
+        volume,
+        ratingGroupNumber,
+        unitType,
+        mcc,
+        mnc
+      )
       const initRequestBody = {
         url: urlForInit,
         requestData: initRequestData,
@@ -55,7 +65,7 @@ export default {
       console.log(initResult)
       const sessionId = initResult.data.headers.location
       const urlForUpdate = await updateUrl(sessionId)
-      const updateRequestData = await updateData(providerId, deviceId, volume, ratingGroupNumber, unitType)
+      const updateRequestData = await updateData(providerId, deviceId, volume, ratingGroupNumber, unitType, mcc, mnc)
       const updateRequestBody = {
         url: urlForUpdate,
         requestData: updateRequestData,
@@ -64,7 +74,7 @@ export default {
       const updateResult = await axios.post(proxyUrl, updateRequestBody)
       console.log(updateResult)
       const urlForTerminate = await terminateUrl(sessionId)
-      const terminateRequestData = await terminateData(providerId, deviceId, ratingGroupNumber, unitType)
+      const terminateRequestData = await terminateData(providerId, deviceId, ratingGroupNumber, unitType, mcc, mnc)
       const terminateRequestBody = {
         url: urlForTerminate,
         requestData: terminateRequestData,

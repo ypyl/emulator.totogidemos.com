@@ -71,7 +71,7 @@ export default {
       const planDetails = context.rootState.currentPlanInformation
       const currentAccountState = context.rootState.accounts[accountId]
       currentAccountState.subscription.push(planDetails)
-      const newAccountState = currentAccountState
+      const newAccountState = await currentAccountState
       console.log(newAccountState)
       await context.commit('putAccount', newAccountState, { root: true })
     }

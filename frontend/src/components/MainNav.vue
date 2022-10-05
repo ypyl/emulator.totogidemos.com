@@ -83,14 +83,43 @@
       >
       </CFormSelect>
       <b>Verbose Logging:</b>
-        <div id="verboseLogging">
-          <CButton
-            @click="this.$store.dispatch('logging/toggleVerbosity')"
-            color="info"
-            shape="rounded-pill"
-          >Verbose Logging: {{this.$store.state.verboseLogging ? 'ON' : 'OFF'}}
-        </CButton>
-        </div>
+      <div id="verboseLogging">
+        <CButton
+          @click="this.$store.dispatch('logging/toggleVerbosity')"
+          color="info"
+          shape="rounded-pill"
+        >Verbose Logging: {{this.$store.state.verboseLogging ? 'ON' : 'OFF'}}
+      </CButton>
+      </div>
+      <br />
+      <CForm>
+        <CFormInput
+          v-model="mcc"
+          type="text"
+          id="mcc"
+          label="Mobile Country Code"
+          placeholder="310"
+          text="the mobile country code you want to send traffic in on"
+          aria-describedby="the mobile country code you want to send traffic in on"
+        />
+        <CFormInput
+          v-model="mnc"
+          type="text"
+          id="mnc"
+          label="Mobile Network Code"
+          placeholder="170"
+          text="the mobile network code you want to send traffic in on"
+          aria-describedby="the mobile network code you want to send traffic in on"
+        />
+      </CForm>
+      <div id="verboseLogging">
+        <CButton
+          @click="updateMncMccValues()"
+          color="info"
+          shape="rounded-pill"
+        >Update MNC/MCC
+      </CButton>
+      </div>
     </CModalBody>
     <CModalFooter>
       <CButton color="secondary" @click="closeConfigModal()">
@@ -108,6 +137,24 @@ export default {
   data () {
     return {
       configModalVisible: false
+    }
+  },
+  computed: {
+    mcc: {
+      get () {
+        return this.$store.state.mcc
+      },
+      set (value) {
+        this.$store.commit('updateMcc', value)
+      }
+    },
+    mnc: {
+      get () {
+        return this.$store.state.mnc
+      },
+      set (value) {
+        this.$store.commit('updateMnc', value)
+      }
     }
   },
   methods: {

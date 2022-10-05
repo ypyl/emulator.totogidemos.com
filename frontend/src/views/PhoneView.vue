@@ -12,7 +12,16 @@
     </CModal>
     <br />
     <h1>Device: {{ deviceId }} </h1>
-    <ShowAccountBox :accountId="accountId" :deviceId="deviceId" />
+    <ShowAccountBox
+      v-if="!$store.state.allPlanVersionAllocations"
+      :accountId="accountId"
+      :deviceId="deviceId"
+    />
+    <BalancesTable
+      v-if="$store.state.allPlanVersionAllocations"
+      :accountId="accountId"
+      :deviceId="deviceId"
+    />
     <CContainer fluid>
     <CRow>
       <CCol>
@@ -107,6 +116,7 @@ import PodcastIcon from '@/components/icons/PodcastIcon.vue'
 import InstagramIcon from '@/components/icons/InstagramIcon.vue'
 import LogBox from '@/components/LogBox.vue'
 import ShowAccountBox from '@/components/ShowAccountBox.vue'
+import BalancesTable from '@/components/BalancesTable.vue'
 
 export default {
   components: {
@@ -119,7 +129,8 @@ export default {
     InstagramIcon,
     LogBox,
     MainNav,
-    ShowAccountBox
+    ShowAccountBox,
+    BalancesTable
   },
   name: 'PhoneView',
   props: {

@@ -1,6 +1,9 @@
 import axios from 'axios'
 import { graphQLUrl } from '@/store/common'
 import getStorageSizeInBytesByUnit from '@/utils/storageSizes'
+import {
+  getAllServiceAllowances
+} from './utils/unifiedBalances'
 
 export default {
   namespaced: true,
@@ -25,6 +28,18 @@ export default {
       console.log('Plan version information:')
       console.log(planVersionInformationResponse)
       const template = planVersionInformationResponse.data.data.getPlanVersion.template
+      // if Wave 3 plan
+      try {
+        const services = template.services
+        const serviceAllowances = await getAllServiceAllowances(services)
+        console.log(serviceAllowances)
+        context.commit('setAllPlanVersionAllocations', serviceAllowances, { root: true })
+        return
+      } catch (e) {
+        console.log('Wave3 plan version information failed, probably not wave3 plan')
+        console.log(e)
+      }
+      // Remaining stuff only happens if not a wave 3 plan:
       // Setting Voice Allocation
       try {
         const voiceAllocationSeconds = template.voice.periodAllowance
