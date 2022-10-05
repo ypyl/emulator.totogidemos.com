@@ -58,7 +58,7 @@ export async function topUpData (providerId, deviceId, volume) {
   return result
 }
 
-export async function initData (providerId, deviceId, volume, ratingGroupNumber, unitType) {
+export async function initData (providerId, deviceId, volume, ratingGroupNumber, unitType, mcc, mnc) {
   const timestampNow = await isoUtcNow()
   return {
     invocationSequenceNumber: 1,
@@ -84,8 +84,8 @@ export async function initData (providerId, deviceId, volume, ratingGroupNumber,
           nrCellId: '11',
           nid: '12',
           plmnId: {
-            mcc: '310',
-            mnc: '170'
+            mcc: mcc,
+            mnc: mnc
           }
         }
       }
@@ -97,7 +97,7 @@ export async function initData (providerId, deviceId, volume, ratingGroupNumber,
   }
 }
 
-export async function updateData (providerId, deviceId, volume, ratingGroupNumber, unitType) {
+export async function updateData (providerId, deviceId, volume, ratingGroupNumber, unitType, mcc, mnc) {
   const timestampNow = await isoUtcNow()
   return {
     invocationSequenceNumber: 2,
@@ -123,8 +123,8 @@ export async function updateData (providerId, deviceId, volume, ratingGroupNumbe
           nrCellId: '11',
           nid: '12',
           plmnId: {
-            mcc: '310',
-            mnc: '170'
+            mcc: mcc,
+            mnc: mnc
           }
         }
       }
@@ -136,7 +136,7 @@ export async function updateData (providerId, deviceId, volume, ratingGroupNumbe
   }
 }
 
-export async function terminateData (providerId, deviceId, ratingGroupNumber, unitType) {
+export async function terminateData (providerId, deviceId, ratingGroupNumber, unitType, mcc, mnc) {
   const timestampNow = await isoUtcNow()
   return {
     invocationSequenceNumber: 3,
@@ -159,8 +159,8 @@ export async function terminateData (providerId, deviceId, ratingGroupNumber, un
           nrCellId: '11',
           nid: '12',
           plmnId: {
-            mcc: '310',
-            mnc: '170'
+            mcc: mcc,
+            mnc: mnc
           }
         }
       }

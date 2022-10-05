@@ -194,6 +194,9 @@ export default {
       this.loadData()
     }.bind(this), 6000)
   },
+  beforeUnmount () {
+    clearInterval(this)
+  },
   methods: {
     loadData: function () {
       // Move this out as a prop with account ID

@@ -19,6 +19,8 @@
     />
     <BalancesTable
       v-if="$store.state.allPlanVersionAllocations"
+      :accountId="accountId"
+      :deviceId="deviceId"
     />
     <CContainer fluid>
     <CRow>

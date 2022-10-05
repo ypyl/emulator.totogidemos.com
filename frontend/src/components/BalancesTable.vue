@@ -47,15 +47,30 @@ export default {
       required: true
     }
   },
+  mounted: function () {
+    console.log('Ready')
+    this.loadData()
+    setInterval(function () {
+      console.log('interval')
+      this.loadData()
+    }.bind(this), 6000)
+  },
+  beforeUnmount () {
+    clearInterval(this)
+  },
   methods: {
+    loadData: function () {
+      // Move this out as a prop with account ID
+      console.log('Getting account for ' + this.$props.accountId)
+      this.$store.dispatch('getAccount', { accountId: this.$props.accountId })
+      this.$store.dispatch('notifications/update', { accountId: this.$props.accountId, deviceId: this.$props.deviceId })
+      this.$store.dispatch('getAndSummarizeEdrs', { deviceId: this.$props.deviceId })
+    },
     allocationOrBalanceName (allocation) {
       return Object.keys(allocation)[0]
     },
     getBalanceRemaining (allocation, balances) {
       const currentAllocationName = this.allocationOrBalanceName(allocation)
-      console.log('what')
-      console.log(balances)
-      console.log(balances.length)
       for (let i = 0; i < balances.length; i++) {
         if (Object.keys(balances[i])[0] === currentAllocationName) {
           return this.allocationOrBalanceValue(balances[i])
@@ -63,12 +78,16 @@ export default {
       }
     },
     allocationOrBalanceValue (allocation) {
+      const allocationValue = allocation[this.allocationOrBalanceName(allocation)]
+      if (allocationValue === null) {
+        return 'Unlimited'
+      }
       if (this.allocationOrBalanceType(allocation) === 'voice') {
-        return (allocation[this.allocationOrBalanceName(allocation)] / 60).toString() + ' Minutes'
+        return (allocationValue / 60).toString() + ' Minutes'
       } else if (this.allocationOrBalanceType(allocation) === 'data') {
-        return (allocation[this.allocationOrBalanceName(allocation)] / (1024 * 1024)).toString() + ' MB'
+        return (allocationValue / (1024 * 1024)).toString() + ' MB'
       } else {
-        return (allocation[this.allocationOrBalanceName(allocation)]).toString() + ' SMS'
+        return (allocationValue).toString() + ' SMS'
       }
     },
     allocationOrBalanceType (allocation) {

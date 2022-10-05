@@ -28,6 +28,7 @@ export async function getAllServiceBalances (balance) {
     }
     convertedBalances = [...convertedBalances, newBalance]
   }
+  console.log('convertedBalances')
   console.log(convertedBalances)
   return convertedBalances
 }

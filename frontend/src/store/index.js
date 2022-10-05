@@ -39,7 +39,9 @@ export default createStore({
       allAvailablePlanInformation: {},
       allPlanVersionAllocations: [],
       currentPlanInformation: {},
-      accounts: {}
+      accounts: {},
+      mcc: 310,
+      mnc: 170
     }
   },
   getters: {
@@ -56,6 +58,12 @@ export default createStore({
     },
     updateUnitTypeMapping (state, newMapping) {
       state.unitTypeMapping = newMapping
+    },
+    updateMcc (state, mcc) {
+      state.mcc = mcc
+    },
+    updateMnc (state, mnc) {
+      state.mnc = mnc
     },
     putAccount (state, newAccountDetails) {
       state.accounts[newAccountDetails.accountId] = newAccountDetails
