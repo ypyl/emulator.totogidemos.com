@@ -46,6 +46,7 @@ export default {
         // Naive implementation that assumes only one Rating Group
         const ratingGroup = customData.charginginformation.multipleunitinformation[0].ratinggroup
         const usedUnits = customData.charginginformation.multipleunitinformation[0].grantedunit[context.rootState.unitTypeMapping[ratingGroup].toLowerCase()]
+        // const balanceUsedName = customData.charginginformation.multipleunitinformation[0].charges[0].balanceused
         console.log('In edrs')
         console.log(ratingGroup)
         console.log(usedUnits)

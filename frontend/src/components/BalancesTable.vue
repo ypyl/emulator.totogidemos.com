@@ -8,6 +8,7 @@
                 <CTableHeaderCell scope="col">Balance Type</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Allocation</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Remaining</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Used</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Percent Remaining</CTableHeaderCell>
                 </CTableRow>
             </CTableHead>
@@ -20,8 +21,34 @@
                         <CTableDataCell>{{ allocationOrBalanceName(allocation) }}</CTableDataCell>
                         <CTableDataCell>{{ allocationOrBalanceType(allocation) }}</CTableDataCell>
                         <CTableDataCell>{{ allocationOrBalanceValue(allocation) }}</CTableDataCell>
-                        <CTableDataCell> {{ getBalanceRemaining(allocation, $store.state.currentNonMonetaryBalances) }} </CTableDataCell>
-                        <CTableDataCell> {{ parseInt(getBalanceRemaining(allocation, $store.state.currentNonMonetaryBalances)) / parseInt(allocationOrBalanceValue(allocation)) * 100 }} %</CTableDataCell>
+                        <!-- START Handle Rendering Remaining Balances -->
+                        <template v-if="allocationOrBalanceValue(allocation) === 'Unlimited'">
+                          <CTableDataCell>Unlimited</CTableDataCell>
+                        </template>
+                        <template v-if="allocationOrBalanceValue(allocation) !== 'Unlimited'">
+                          <CTableDataCell>
+                            {{ getBalanceRemaining(allocation, $store.state.currentNonMonetaryBalances) }}
+                          </CTableDataCell>
+                        </template>
+                        <!-- END Handle Rendering Remaining Balances -->
+                        <template v-if="allocationOrBalanceName(allocation).includes('voice')">
+                          <CTableDataCell>
+                            {{ $store.state.edrs.voiceEdrSummary }} Minutes (Total Across Balances)
+                          </CTableDataCell>
+                        </template>
+                        <template v-if="allocationOrBalanceName(allocation).includes('text')">
+                          <CTableDataCell>
+                            {{ $store.state.edrs.smsEdrSummary }} Messages (Total Across Balances)
+                          </CTableDataCell>
+                        </template>
+                        <template v-if="allocationOrBalanceName(allocation).includes('data')">
+                          <CTableDataCell>
+                            {{ $store.state.edrs.dataEdrSummary }} MB (Total Across Balances)
+                          </CTableDataCell>
+                        </template>
+                        <CTableDataCell>
+                          {{ parseInt(getBalanceRemaining(allocation, $store.state.currentNonMonetaryBalances)) / parseInt(allocationOrBalanceValue(allocation)) * 100 }} %
+                        </CTableDataCell>
                     </CTableRow>
             </CTableBody>
             </CTable>
