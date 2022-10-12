@@ -4,15 +4,17 @@
 
 <script>
 export default {
-  props: ['numberSms', 'deviceId'],
+  props: ['callednumber', 'numberSms', 'deviceId'],
   methods: {
     iconClicked () {
-      const message = `SMS ACTIVITY: Charging ${this.numberSms} SMS`
+      const message = `SMS ACTIVITY: Charging ${this.numberSms} SMS for ${this.callednumber}`
       console.log(message)
+      const callednumber = this.callednumber
       const volume = this.numberSms
       const ratingGroupNumber = 200
       const payload = {
         deviceId: this.$props.deviceId,
+        callednumber: callednumber,
         volume: volume,
         ratingGroupNumber: ratingGroupNumber,
         message: message

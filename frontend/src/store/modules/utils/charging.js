@@ -58,7 +58,7 @@ export async function topUpData (providerId, deviceId, volume) {
   return result
 }
 
-export async function initData (providerId, deviceId, volume, ratingGroupNumber, unitType, mcc, mnc) {
+export async function initData (providerId, deviceId, callednumber, volume, ratingGroupNumber, unitType, mcc, mnc) {
   const timestampNow = await isoUtcNow()
   return {
     invocationSequenceNumber: 1,
@@ -78,6 +78,11 @@ export async function initData (providerId, deviceId, volume, ratingGroupNumber,
         ratingGroup: ratingGroupNumber
       }
     ],
+    iMSChargingInformation: {
+      calledPartyAddress: callednumber,
+      carrierSelectRoutingInformation: 'ARIN',
+      numberPortabilityRoutingInformation: 'ARIN'
+    },
     locationReportingChargingInformation: {
       pSCellInformation: {
         nrcgi: {
@@ -97,7 +102,7 @@ export async function initData (providerId, deviceId, volume, ratingGroupNumber,
   }
 }
 
-export async function updateData (providerId, deviceId, volume, ratingGroupNumber, unitType, mcc, mnc) {
+export async function updateData (providerId, callednumber, deviceId, volume, ratingGroupNumber, unitType, mcc, mnc) {
   const timestampNow = await isoUtcNow()
   return {
     invocationSequenceNumber: 2,
@@ -117,6 +122,11 @@ export async function updateData (providerId, deviceId, volume, ratingGroupNumbe
         ratingGroup: ratingGroupNumber
       }
     ],
+    iMSChargingInformation: {
+      calledPartyAddress: callednumber,
+      carrierSelectRoutingInformation: 'ARIN',
+      numberPortabilityRoutingInformation: 'ARIN'
+    },
     locationReportingChargingInformation: {
       pSCellInformation: {
         nrcgi: {
@@ -136,7 +146,7 @@ export async function updateData (providerId, deviceId, volume, ratingGroupNumbe
   }
 }
 
-export async function terminateData (providerId, deviceId, ratingGroupNumber, unitType, mcc, mnc) {
+export async function terminateData (providerId, callednumber, deviceId, ratingGroupNumber, unitType, mcc, mnc) {
   const timestampNow = await isoUtcNow()
   return {
     invocationSequenceNumber: 3,
@@ -153,6 +163,11 @@ export async function terminateData (providerId, deviceId, ratingGroupNumber, un
         ratingGroup: ratingGroupNumber
       }
     ],
+    iMSChargingInformation: {
+      calledPartyAddress: callednumber,
+      carrierSelectRoutingInformation: 'ARIN',
+      numberPortabilityRoutingInformation: 'ARIN'
+    },
     locationReportingChargingInformation: {
       pSCellInformation: {
         nrcgi: {

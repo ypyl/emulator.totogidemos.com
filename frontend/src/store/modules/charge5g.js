@@ -16,7 +16,7 @@ export default {
   getters: {},
   mutations: {},
   actions: {
-    async chargeAccount (context, { volume, ratingGroupNumber, message, deviceId }) {
+    async chargeAccount (context, { volume, callednumber, ratingGroupNumber, message, deviceId }) {
       const verboseLoggingOn = context.rootState.verboseLogging
       const token = context.rootState.idToken
       const providerId = context.rootState.providerId
@@ -28,6 +28,7 @@ export default {
       const initRequestData = await initData(
         providerId,
         deviceId,
+        callednumber,
         volume,
         ratingGroupNumber,
         unitType,
@@ -65,7 +66,7 @@ export default {
       console.log(initResult)
       const sessionId = initResult.data.headers.location
       const urlForUpdate = await updateUrl(sessionId)
-      const updateRequestData = await updateData(providerId, deviceId, volume, ratingGroupNumber, unitType, mcc, mnc)
+      const updateRequestData = await updateData(providerId, callednumber, deviceId, volume, ratingGroupNumber, unitType, mcc, mnc)
       const updateRequestBody = {
         url: urlForUpdate,
         requestData: updateRequestData,
@@ -74,7 +75,7 @@ export default {
       const updateResult = await axios.post(proxyUrl, updateRequestBody)
       console.log(updateResult)
       const urlForTerminate = await terminateUrl(sessionId)
-      const terminateRequestData = await terminateData(providerId, deviceId, ratingGroupNumber, unitType, mcc, mnc)
+      const terminateRequestData = await terminateData(providerId, callednumber, deviceId, ratingGroupNumber, unitType, mcc, mnc)
       const terminateRequestBody = {
         url: urlForTerminate,
         requestData: terminateRequestData,

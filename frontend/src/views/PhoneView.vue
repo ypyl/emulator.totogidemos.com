@@ -30,8 +30,9 @@
             <b>Camera</b>
             <br><br><br>
             <CRow>
+              <CFormInput v-model="callednumber" type="text" placeholder="Enter B Number" filled rounded dense aria-label="callednumber"/>
               <CCol>
-                <PhoneIcon :numberMinutes="minuteSelection" :deviceId="deviceId" />
+                <PhoneIcon :numberMinutes="minuteSelection" :deviceId="deviceId" :callednumber="callednumber"/>
                 <div id="smsVoiceDropDownSelect">
                   <CFormSelect
                     aria-label="Select number of minutes to charge"
@@ -45,7 +46,7 @@
                 </div>
               </CCol>
               <CCol>
-                <MessagesIcon :numberSms="smsSelection" :deviceId="deviceId" />
+                <MessagesIcon :numberSms="smsSelection" :deviceId="deviceId" :callednumber="callednumber"/>
                 <div id="smsVoiceDropDownSelect">
                   <CFormSelect
                     aria-label="Select number of SMS to charge"
@@ -145,6 +146,7 @@ export default {
   },
   data () {
     return {
+      callednumber: '',
       minuteSelection: 5,
       smsSelection: 5
     }
@@ -168,6 +170,11 @@ export default {
 </script>
 
 <style scoped>
+#callednumber {
+  padding: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
 
 #smsVoiceDropDownSelect {
   padding: 10px;
