@@ -98,7 +98,7 @@
           type="text"
           id="mcc"
           label="Mobile Country Code"
-          placeholder="404"
+          placeholder="310"
           text="the mobile country code you want to send traffic in on"
           aria-describedby="the mobile country code you want to send traffic in on"
         />
@@ -107,7 +107,7 @@
           type="text"
           id="mnc"
           label="Mobile Network Code"
-          placeholder="86"
+          placeholder="170"
           text="the mobile network code you want to send traffic in on"
           aria-describedby="the mobile network code you want to send traffic in on"
         />
