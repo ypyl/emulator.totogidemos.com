@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     async reloadBasicPlanData () {
-      const accountDeviceId = this.$store.state.demoAccountsAndDevices[0].id
+      const accountDeviceId = this.$props.accountId
       await this.$store.dispatch('account/CancelPlanSubscription', { accountId: accountDeviceId })
       await this.$store.dispatch('account/subscribeToCurrentPlanVersion', { accountId: accountDeviceId })
     }
