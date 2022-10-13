@@ -1,6 +1,6 @@
 <template>
     <CCol id="logBox">
-                <CButton
+        <CButton
          color="info"
          @click="reloadBasicPlanData()"
         >
