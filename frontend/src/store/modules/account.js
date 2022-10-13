@@ -68,7 +68,7 @@ export default {
           }
         },
       )
-      async CancelPlanSubscriptionMutation (context, { accountId }) {
+      async CancelPlanSubscription (context, { accountId }) {
         await axios.post(
           graphQLUrl,
           CancelPlanSubscriptionMutation(
