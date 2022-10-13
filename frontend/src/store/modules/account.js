@@ -66,8 +66,9 @@ export default {
           headers: {
             Authorization: `${context.rootState.idToken}`
           }
-        },
+        }
       )
+    },
       async CancelPlanSubscription (context, { accountId }) {
         await axios.post(
           graphQLUrl,
