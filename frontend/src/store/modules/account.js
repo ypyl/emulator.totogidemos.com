@@ -69,20 +69,20 @@ export default {
         }
       )
     },
-      async CancelPlanSubscription (context, { accountId }) {
-        await axios.post(
-          graphQLUrl,
-          CancelPlanSubscriptionMutation(
-            accountId,
-            context.rootState.providerId,
-            context.rootState.currentPlanVersionId
-          ),
-          {
-            headers: {
-              Authorization: `${context.rootState.idToken}`
-            }
+    async CancelPlanSubscription (context, { accountId }) {
+      await axios.post(
+        graphQLUrl,
+        CancelPlanSubscriptionMutation(
+          accountId,
+          context.rootState.providerId,
+          context.rootState.currentPlanVersionId
+        ),
+        {
+          headers: {
+            Authorization: `${context.rootState.idToken}`
           }
-        )
+        }
+      )
       // Add updating the current plan version for an account
       const planDetails = context.rootState.currentPlanInformation
       const currentAccountState = context.rootState.accounts[accountId]
