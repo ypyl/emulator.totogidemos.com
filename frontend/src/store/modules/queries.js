@@ -582,7 +582,7 @@ export function getEventDataRecordsByDeviceQuery (providerId, deviceId, timestam
 }
 export function CancelPlanSubscriptionMutation (accountId, providerId, planVersionId) {
   return JSON.stringify({
-    query: `mutation CancelPlanSubs {
+    query: `mutation CancelPlanSubscription {
       cancelPlanSubscription(
         input: {
           accountId: "${accountId}"
