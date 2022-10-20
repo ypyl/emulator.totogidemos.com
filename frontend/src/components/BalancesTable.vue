@@ -52,6 +52,12 @@
                     </CTableRow>
             </CTableBody>
             </CTable>
+            <CButton
+             color="info"
+             @click="reloadBasicPlanData()"
+            >
+            New Plan Provision
+           </CButton>
       </CContainer>
     </div>
 </template>
@@ -125,6 +131,11 @@ export default {
       } else if (this.allocationOrBalanceName(allocation).includes('data')) {
         return 'data'
       }
+    },
+    async reloadBasicPlanData () {
+      await this.$store.dispatch('account/CancelPlanSubscription', { accountId: this.$props.accountId })
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      await this.$store.dispatch('account/subscribeToCurrentPlanVersion', { accountId: this.$props.accountId })
     }
   }
 }
