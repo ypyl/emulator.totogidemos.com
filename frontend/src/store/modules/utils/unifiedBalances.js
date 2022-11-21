@@ -35,11 +35,20 @@ export async function getAllServiceBalances (balance) {
 
 export async function getAllServiceAllowances (allowances) {
   let convertedAllowances = []
-  for (let i = 0; i < allowances.length; i++) {
-    const newAllowance = {
-      [allowances[i].unit.balanceName]: allowances[i].unit.periodAllowance
+  try {
+    for (let i = 0; i < allowances.length; i++) {
+      if (allowances[i].unit.balanceName !== 'undefined') {
+        console.log(allowances[i].unit.balanceName)
+        const newAllowance = {
+          [allowances[i].unit.balanceName]: allowances[i].unit.periodAllowance
+        }
+        convertedAllowances = [...convertedAllowances, newAllowance]
+      }
     }
-    convertedAllowances = [...convertedAllowances, newAllowance]
+    return convertedAllowances
+  } catch (e) {
+    console.log('Undefined balance name found')
+    console.log(e)
+    return convertedAllowances
   }
-  return convertedAllowances
 }
