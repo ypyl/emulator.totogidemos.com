@@ -83,7 +83,7 @@
               <CCol>
                 <WhatsAppIcon :deviceId="deviceId" />
                 <h4>1hr call</h4>
-                <h4>(100MB)</h4>
+                <h4>(50MB)</h4>
               </CCol>
               <CCol />
               <CCol />
