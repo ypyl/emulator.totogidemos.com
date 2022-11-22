@@ -37,7 +37,7 @@ export async function getAllServiceAllowances (allowances) {
   let convertedAllowances = []
   try {
     for (let i = 0; i < allowances.length; i++) {
-      if (allowances[i].unit.balanceName !== 'undefined') {
+      if (allowances[i].unit && allowances[i].unit.balanceName !== 'undefined') {
         console.log(allowances[i].unit.balanceName)
         const newAllowance = {
           [allowances[i].unit.balanceName]: allowances[i].unit.periodAllowance
