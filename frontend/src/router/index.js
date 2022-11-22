@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import PhoneView from '../views/PhoneView.vue'
 import AccountsView from '../views/AccountsView.vue'
 import SignInView from '../views/SignInView.vue'
+import ProfileView from '../views/ProfileView.vue'
 import store from '../store/index'
 
 const routes = [
@@ -20,6 +21,11 @@ const routes = [
     path: '/accounts',
     name: 'Accounts',
     component: AccountsView
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: ProfileView
   },
   {
     path: '/account/:accountId/device/:deviceId',

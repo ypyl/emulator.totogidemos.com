@@ -654,3 +654,20 @@ export function CancelPlanSubscriptionMutation (accountId, providerId, planVersi
     `
   })
 }
+
+export function getCurrentUserQuery () {
+  return JSON.stringify({
+    query: `query GetCurrentUser {
+      getCurrentUser {
+        providerId
+        userId
+        email
+        name
+        roleGroupMemberships
+        phoneNumber
+        jobTitle
+        softwareMfaEnabled
+      }
+    }`
+  })
+}

@@ -12,6 +12,7 @@ import signIn from './modules/signIn.js'
 import unitMapping from './modules/unitMapping.js'
 import credit5g from './modules/credit5g.js'
 import logging from './modules/logging.js'
+import user from './modules/user.js'
 
 export default createStore({
   state () {
@@ -40,6 +41,7 @@ export default createStore({
       allAvailablePlanInformation: {},
       allPlanVersionAllocations: [],
       currentPlanInformation: {},
+      currentUser: {},
       accounts: {},
       mcc: 310,
       mnc: 170
@@ -135,6 +137,9 @@ export default createStore({
     },
     setAllPlanVersionAllocations (state, allowances) {
       state.allPlanVersionAllocations = allowances
+    },
+    setCurrentUser (state, user) {
+      state.currentUser = user
     }
   },
   actions: {},
@@ -150,6 +155,7 @@ export default createStore({
     planVersionAllocations: planVersionAllocations,
     planVersions: planVersions,
     signIn: signIn,
-    unitMapping: unitMapping
+    unitMapping: unitMapping,
+    user: user
   }
 })
