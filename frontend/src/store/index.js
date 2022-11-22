@@ -23,7 +23,8 @@ export default createStore({
         100: 'time',
         200: 'serviceSpecificUnits',
         300: 'totalVolume',
-        400: 'serviceSpecificUnits'
+        400: 'serviceSpecificUnits',
+        380: 'totalVolume'
       },
       deviceLogs: {},
       zeroRatedData: false,

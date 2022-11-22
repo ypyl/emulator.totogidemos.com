@@ -12,7 +12,7 @@ export default {
       const message = 'DATA ACTIVITY: Charging 100 MB'
       console.log(message)
       const volume = 100 * getStorageSizeInBytesByUnit('MB')
-      const ratingGroupNumber = 320
+      const ratingGroupNumber = 380
       const payload = {
         deviceId: this.$props.deviceId,
         volume: volume,
