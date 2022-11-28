@@ -46,9 +46,14 @@
                             {{ $store.state.edrs.dataEdrSummary }} MB (Total Across Balances)
                           </CTableDataCell>
                         </template>
-                        <CTableDataCell>
+                        <template v-if="allocationOrBalanceValue(allocation) === 'Unlimited'">
+                          <CTableDataCell>100 %</CTableDataCell>
+                        </template>
+                        <template v-if="allocationOrBalanceValue(allocation) !== 'Unlimited'">
+                          <CTableDataCell>
                           {{ parseInt(getBalanceRemaining(allocation, $store.state.currentNonMonetaryBalances)) / parseInt(allocationOrBalanceValue(allocation)) * 100 }} %
-                        </CTableDataCell>
+                          </CTableDataCell>
+                        </template>
                     </CTableRow>
             </CTableBody>
             </CTable>
@@ -83,13 +88,13 @@ export default {
   mounted: function () {
     console.log('Ready')
     this.loadData()
-    setInterval(function () {
+    this.interval = setInterval(function () {
       console.log('interval')
       this.loadData()
     }.bind(this), 6000)
   },
   beforeUnmount () {
-    clearInterval(this)
+    clearInterval(this.interval)
   },
   methods: {
     loadData: function () {

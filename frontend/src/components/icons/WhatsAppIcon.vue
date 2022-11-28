@@ -9,10 +9,10 @@ export default {
   props: ['deviceId'],
   methods: {
     iconClicked () {
-      const message = 'DATA ACTIVITY: Charging 100 MB'
+      const message = 'DATA ACTIVITY: Charging 50 MB'
       console.log(message)
-      const volume = 100 * getStorageSizeInBytesByUnit('MB')
-      const ratingGroupNumber = 320
+      const volume = 50 * getStorageSizeInBytesByUnit('MB')
+      const ratingGroupNumber = 380
       const payload = {
         deviceId: this.$props.deviceId,
         volume: volume,

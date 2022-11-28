@@ -36,6 +36,14 @@
           </CNavItem>
           <CNavItem>
             <CNavLink
+              @click="this.$router.push({ name: 'Profile' })"
+              active
+            >
+              User
+            </CNavLink>
+          </CNavItem>
+          <CNavItem>
+            <CNavLink
               v-if="$store.state.idToken"
               @click="openConfigModal()" active>
               View Config
