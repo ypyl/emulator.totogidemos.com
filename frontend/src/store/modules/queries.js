@@ -104,6 +104,45 @@ export function getPlanVersionInformationQuery (providerId, planVersionId) {
   })
 }
 
+export function getMyProviderConfig () {
+  return JSON.stringify({
+    query: `query GetMyProviderConfig {
+        getMyProviderConfig {
+          ... on ProviderConfig {
+            id
+            allowedLifecycleTransitions
+            commonName
+            deleteProviderExecutionArn
+            emergencyNumbers
+            eventBusArn
+            homeNetworks
+            lifecycleStage
+            limits {
+              apiType
+              hardLimitTps
+              overHardLimitUntil
+              overSoftLimitUntil
+              rejectRequestsOverSoftLimit
+              softLimitTps
+            }
+            name
+          }
+          ... on InvalidProviderLifecycleStage {
+            errorCode
+            errorMessage
+            providerLifecycleStage
+          }
+          ... on RateLimitExceeded {
+            errorCode
+            errorMessage
+            retryAfter
+          }
+          __typename
+        }
+      }`
+  })
+}
+
 export function subscribeToPlanQuery (accountId, providerId, planVersionId) {
   return JSON.stringify({
     query: `mutation SubscribeToPlan {
