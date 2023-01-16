@@ -174,6 +174,10 @@ export default {
         { label: 'serviceSpecificUnits', value: 'serviceSpecificUnits' }
       ]
     },
+    updateMncMccValues () {
+      this.$store.commit('updateMcc', this.mcc, { root: true })
+      this.$store.commit('updateMnc', this.mnc, { root: true })
+    },
     openConfigModal () {
       this.configModalVisible = true
     },

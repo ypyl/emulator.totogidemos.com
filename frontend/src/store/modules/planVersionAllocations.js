@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { graphQLUrl } from '@/store/common'
+import { getPlanVersionInformationQuery } from '../modules/queries'
 import getStorageSizeInBytesByUnit from '@/utils/storageSizes'
 import {
   getAllServiceAllowances
@@ -118,110 +119,4 @@ export default {
       }
     }
   }
-}
-
-export function getPlanVersionInformationQuery (providerId, planVersionId) {
-  return JSON.stringify({
-    query: `query GetPlanVersion {
-    getPlanVersion(
-        planVersionId: "${planVersionId}"
-        providerId: "${providerId}"
-    ) {
-        ... on PlanVersionNotFound {
-        errorMessage
-        errorCode
-        planVersionId
-        providerId
-        }
-        ... on PlanVersion {
-        providerId
-        template {
-            ... on InitialTemplateInstance  {
-              services {
-                ratingGroupId
-                priority
-                unit{
-                  periodAllowance
-                  balanceName
-                }
-              }
-            firstUsageFee
-            purchaseFee
-            period {
-                periodType
-                numberOfPeriods
-                recurring
-            }
-            voice {
-                balanceName
-                rollover
-                periodAllowance
-                offPeak {
-                rate
-                }
-                overage {
-                rate
-                }
-                roaming {
-                rate {
-                    rate
-                }
-                }
-                longDistance {
-                rate {
-                    rate
-                }
-                }
-            }
-            data {
-                ratingGroupId
-                balanceName
-                rollover
-                periodAllowance
-                offPeak {
-                rate
-                }
-                fairUsagePolicyCounter {
-                states {
-                    name
-                    threshold
-                }
-                }
-                overage {
-                rate
-                }
-                roaming {
-                rate {
-                    rate
-                }
-                }
-            }
-            text {
-                balanceName
-                rollover
-                periodAllowance
-                offPeak {
-                rate
-                }
-                overage {
-                rate
-                }
-                roaming {
-                rate {
-                    rate
-                }
-                }
-                longDistance {
-                rate {
-                    rate
-                }
-                }
-            }
-            }
-        }
-        }
-    }
-    }
-    `
-  })
 }

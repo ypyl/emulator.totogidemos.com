@@ -7,6 +7,7 @@ import device from './modules/device.js'
 import edrs from './modules/edrs.js'
 import notifications from './modules/notifications.js'
 import planVersionAllocations from './modules/planVersionAllocations.js'
+import myProviderConfig from './modules/myProviderConfig.js'
 import planVersions from './modules/planVersions.js'
 import signIn from './modules/signIn.js'
 import unitMapping from './modules/unitMapping.js'
@@ -153,6 +154,7 @@ export default createStore({
     logging: logging,
     notifications: notifications,
     planVersionAllocations: planVersionAllocations,
+    myProviderConfig: myProviderConfig,
     planVersions: planVersions,
     signIn: signIn,
     unitMapping: unitMapping,

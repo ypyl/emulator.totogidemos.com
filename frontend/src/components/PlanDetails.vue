@@ -136,6 +136,8 @@ export default {
     async makeDefault (planDetails) {
       await this.$store.commit('setCurrentPlanInformation', planDetails, { root: true })
       await this.$store.dispatch('planVersionAllocations/getPlanVersionInformation')
+      await this.$nextTick()
+      await this.$store.dispatch('myProviderConfig/getMyProviderConfig')
     },
     async loadBasicPlanData () {
       this.loadingPlanData = true
@@ -143,12 +145,16 @@ export default {
       this.loadingPlanData = false
       await this.$nextTick()
       await this.$store.dispatch('planVersionAllocations/getPlanVersionInformation')
+      await this.$nextTick()
+      await this.$store.dispatch('myProviderConfig/getMyProviderConfig')
     }
   },
   async mounted () {
     await this.$store.dispatch('planVersions/getPlanInformation')
     await this.$nextTick()
     await this.$store.dispatch('planVersionAllocations/getPlanVersionInformation')
+    await this.$nextTick()
+    await this.$store.dispatch('myProviderConfig/getMyProviderConfig')
   }
 }
 </script>
