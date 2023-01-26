@@ -43,4 +43,17 @@ export default {
 .notification{
     color: #FAC863;
 }
+.quota-success{
+    color: #98fa63;
+    font-size: 15px;
+}
+.quota-success-partial{
+    color: #ffb700;
+    font-size: 15px;
+}
+.quota-fail{
+    color: #ff000d;
+    font-size: 15px;
+}
+
 </style>
