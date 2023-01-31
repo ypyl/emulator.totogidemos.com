@@ -7,11 +7,13 @@ import device from './modules/device.js'
 import edrs from './modules/edrs.js'
 import notifications from './modules/notifications.js'
 import planVersionAllocations from './modules/planVersionAllocations.js'
+import myProviderConfig from './modules/myProviderConfig.js'
 import planVersions from './modules/planVersions.js'
 import signIn from './modules/signIn.js'
 import unitMapping from './modules/unitMapping.js'
 import credit5g from './modules/credit5g.js'
 import logging from './modules/logging.js'
+import user from './modules/user.js'
 
 export default createStore({
   state () {
@@ -23,7 +25,8 @@ export default createStore({
         100: 'time',
         200: 'serviceSpecificUnits',
         300: 'totalVolume',
-        400: 'serviceSpecificUnits'
+        400: 'serviceSpecificUnits',
+        380: 'totalVolume'
       },
       deviceLogs: {},
       zeroRatedData: false,
@@ -39,6 +42,7 @@ export default createStore({
       allAvailablePlanInformation: {},
       allPlanVersionAllocations: [],
       currentPlanInformation: {},
+      currentUser: {},
       accounts: {},
       mcc: 310,
       mnc: 170
@@ -134,6 +138,9 @@ export default createStore({
     },
     setAllPlanVersionAllocations (state, allowances) {
       state.allPlanVersionAllocations = allowances
+    },
+    setCurrentUser (state, user) {
+      state.currentUser = user
     }
   },
   actions: {},
@@ -147,8 +154,10 @@ export default createStore({
     logging: logging,
     notifications: notifications,
     planVersionAllocations: planVersionAllocations,
+    myProviderConfig: myProviderConfig,
     planVersions: planVersions,
     signIn: signIn,
-    unitMapping: unitMapping
+    unitMapping: unitMapping,
+    user: user
   }
 })

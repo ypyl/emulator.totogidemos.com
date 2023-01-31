@@ -79,6 +79,15 @@
                 <h4>(50MB)</h4>
               </CCol>
             </CRow>
+            <CRow>
+              <CCol>
+                <WhatsAppIcon :deviceId="deviceId" />
+                <h4>1hr call</h4>
+                <h4>(50MB)</h4>
+              </CCol>
+              <CCol />
+              <CCol />
+            </CRow>
             <div
               v-if="$store.state.zeroRatedData"
             >

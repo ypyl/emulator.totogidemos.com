@@ -46,12 +46,23 @@
                             {{ $store.state.edrs.dataEdrSummary }} MB (Total Across Balances)
                           </CTableDataCell>
                         </template>
-                        <CTableDataCell>
+                        <template v-if="allocationOrBalanceValue(allocation) === 'Unlimited'">
+                          <CTableDataCell>100 %</CTableDataCell>
+                        </template>
+                        <template v-if="allocationOrBalanceValue(allocation) !== 'Unlimited'">
+                          <CTableDataCell>
                           {{ parseInt(getBalanceRemaining(allocation, $store.state.currentNonMonetaryBalances)) / parseInt(allocationOrBalanceValue(allocation)) * 100 }} %
-                        </CTableDataCell>
+                          </CTableDataCell>
+                        </template>
                     </CTableRow>
             </CTableBody>
             </CTable>
+            <CButton
+             color="info"
+             @click="reloadBasicPlanData()"
+            >
+            New Plan Provision
+           </CButton>
       </CContainer>
     </div>
 </template>
@@ -77,13 +88,13 @@ export default {
   mounted: function () {
     console.log('Ready')
     this.loadData()
-    setInterval(function () {
+    this.interval = setInterval(function () {
       console.log('interval')
       this.loadData()
     }.bind(this), 6000)
   },
   beforeUnmount () {
-    clearInterval(this)
+    clearInterval(this.interval)
   },
   methods: {
     loadData: function () {
@@ -125,6 +136,11 @@ export default {
       } else if (this.allocationOrBalanceName(allocation).includes('data')) {
         return 'data'
       }
+    },
+    async reloadBasicPlanData () {
+      await this.$store.dispatch('account/CancelPlanSubscription', { accountId: this.$props.accountId })
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      await this.$store.dispatch('account/subscribeToCurrentPlanVersion', { accountId: this.$props.accountId })
     }
   }
 }

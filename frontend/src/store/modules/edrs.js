@@ -56,7 +56,7 @@ export default {
         if (ratingGroup === 200) {
           smsBucket += usedUnits
         }
-        if (ratingGroup === 300) {
+        if (ratingGroup === 300 || ratingGroup === 380) {
           dataBucket += usedUnits / getStorageSizeInBytesByUnit('MB')
         }
         context.commit('clearEdrEdges')

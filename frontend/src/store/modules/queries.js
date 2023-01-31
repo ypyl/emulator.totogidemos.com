@@ -15,6 +15,14 @@ export function getPlanVersionInformationQuery (providerId, planVersionId) {
           providerId
           template {
             ... on InitialTemplateInstance {
+              services {
+                ratingGroupId
+                priority
+                unit{
+                  periodAllowance
+                  balanceName
+                }
+              }
               firstUsageFee
               purchaseFee
               period {
@@ -93,6 +101,45 @@ export function getPlanVersionInformationQuery (providerId, planVersionId) {
       }
     }
     `
+  })
+}
+
+export function getMyProviderConfig () {
+  return JSON.stringify({
+    query: `query GetMyProviderConfig {
+        getMyProviderConfig {
+          ... on ProviderConfig {
+            id
+            allowedLifecycleTransitions
+            commonName
+            deleteProviderExecutionArn
+            emergencyNumbers
+            eventBusArn
+            homeNetworks
+            lifecycleStage
+            limits {
+              apiType
+              hardLimitTps
+              overHardLimitUntil
+              overSoftLimitUntil
+              rejectRequestsOverSoftLimit
+              softLimitTps
+            }
+            name
+          }
+          ... on InvalidProviderLifecycleStage {
+            errorCode
+            errorMessage
+            providerLifecycleStage
+          }
+          ... on RateLimitExceeded {
+            errorCode
+            errorMessage
+            retryAfter
+          }
+          __typename
+        }
+      }`
   })
 }
 
@@ -582,7 +629,7 @@ export function getEventDataRecordsByDeviceQuery (providerId, deviceId, timestam
 }
 export function CancelPlanSubscriptionMutation (accountId, providerId, planVersionId) {
   return JSON.stringify({
-    query: `mutation CancelPlanSubs {
+    query: `mutation CancelPlanSubscription {
       cancelPlanSubscription(
         input: {
           accountId: "${accountId}"
@@ -652,5 +699,22 @@ export function CancelPlanSubscriptionMutation (accountId, providerId, planVersi
       }
     }
     `
+  })
+}
+
+export function getCurrentUserQuery () {
+  return JSON.stringify({
+    query: `query GetCurrentUser {
+      getCurrentUser {
+        providerId
+        userId
+        email
+        name
+        roleGroupMemberships
+        phoneNumber
+        jobTitle
+        softwareMfaEnabled
+      }
+    }`
   })
 }

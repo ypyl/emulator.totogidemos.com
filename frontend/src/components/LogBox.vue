@@ -1,11 +1,5 @@
 <template>
     <CCol id="logBox">
-        <CButton
-         color="info"
-         @click="reloadBasicPlanData()"
-        >
-        New Plan Provision
-      </CButton>
         <div
             v-for="log in logLines.slice().reverse()"
             :class="log.style"
@@ -14,27 +8,13 @@
         >
         {{ log.text }}
         </div>
-
     </CCol>
-
 </template>
 
 <script>
 export default {
-  name: 'LogBox',
   props: {
     logLines: Array
-  },
-  data () {
-    return {
-      loadingDemoDevices: false
-    }
-  },
-  methods: {
-    async reloadBasicPlanData () {
-      await this.$store.dispatch('account/CancelPlanSubscription', { accountId: this.$props.accountId })
-      await this.$store.dispatch('account/subscribeToCurrentPlanVersion', { accountId: this.$props.accountId })
-    }
   }
 }
 </script>
@@ -63,4 +43,17 @@ export default {
 .notification{
     color: #FAC863;
 }
+.quota-success{
+    color: #98fa63;
+    font-size: 15px;
+}
+.quota-success-partial{
+    color: #ffb700;
+    font-size: 15px;
+}
+.quota-fail{
+    color: #ff000d;
+    font-size: 15px;
+}
+
 </style>

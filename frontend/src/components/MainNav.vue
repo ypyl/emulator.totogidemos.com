@@ -36,6 +36,14 @@
           </CNavItem>
           <CNavItem>
             <CNavLink
+              @click="this.$router.push({ name: 'Profile' })"
+              active
+            >
+              User
+            </CNavLink>
+          </CNavItem>
+          <CNavItem>
+            <CNavLink
               v-if="$store.state.idToken"
               @click="openConfigModal()" active>
               View Config
@@ -165,6 +173,10 @@ export default {
         { label: 'totalVolume', value: 'totalVolume' },
         { label: 'serviceSpecificUnits', value: 'serviceSpecificUnits' }
       ]
+    },
+    updateMncMccValues () {
+      this.$store.commit('updateMcc', this.mcc, { root: true })
+      this.$store.commit('updateMnc', this.mnc, { root: true })
     },
     openConfigModal () {
       this.configModalVisible = true
